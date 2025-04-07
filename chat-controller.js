@@ -8,8 +8,8 @@ db.serialize(() => {
 
 function searchChatHistory(searchTerm) {
   return new Promise((resolve, reject) => {
-    const query = `SELECT * FROM chat_history WHERE message LIKE '%${searchTerm}%'`;
-    db.all(query, [], (err, rows) => {
+    const query = `SELECT * FROM chat_history WHERE message LIKE $searchTerm`;
+    db.all(query, {$searchTerm: '%' + searchTerm + '%'}, (err, rows) => {
       if (err) reject(err);
       resolve(rows);
     });
